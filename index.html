@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pro Clock & Productivity Toolkit</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+
+<body onload="initApp()">
+
+<div class="navbar">
+  <a href="#home">Home</a>
+  <a href="#live-clock">Live Clock</a>
+  <a href="#stopwatch">Stopwatch</a>
+  <a href="#countdown">Countdown</a>
+  <a href="#alarm">Alarm</a>
+  <a href="#world-clock">World Clock</a>
+  <button onclick="toggleDarkMode()">Toggle Theme</button>
+  <button onclick="window.open('productivity.html', '_blank')">Notes & Quotes</button>
+</div>
+
+<section id="home">
+  <h2>3rd year BCA Project</h2>
+  <p> Shivani mourya vmlg college </p>
+</section>
+
+<section id="live-clock">
+  <h2>🕒 Live Clock</h2>
+  <div id="localClock" class="display-box">00:00:00</div>
+</section>
+
+<section id="stopwatch">
+  <h2>⏱️ Stopwatch Timer</h2>
+  <div id="stopwatchDisplay" class="display-box">00:00:00</div>
+  <div>
+    <button onclick="startStopwatch()">Start</button>
+    <button onclick="pauseStopwatch()">Pause</button>
+    <button onclick="resetStopwatch()">Reset</button>
+  </div>
+</section>
+
+<section id="countdown">
+  <h2>⏳ Countdown Timer</h2>
+  <div>
+    <input type="number" id="cdHours" placeholder="HH" min="0" max="23">
+    <input type="number" id="cdMinutes" placeholder="MM" min="0" max="59">
+    <input type="number" id="cdSeconds" placeholder="SS" min="0" max="59">
+  </div>
+  <div id="countdownDisplay" class="display-box">00:00:00</div>
+  <div>
+    <button onclick="startCountdown()">Start</button>
+    <button onclick="pauseCountdown()">Pause</button>
+    <button onclick="resetCountdown()">Reset</button>
+  </div>
+</section>
+
+<section id="alarm">
+  <h2>⏰ Alarm</h2>
+  <div>
+    <input type="number" id="alarmHours" placeholder="HH" min="0" max="23">
+    <input type="number" id="alarmMinutes" placeholder="MM" min="0" max="59">
+  </div>
+  <div id="alarmStatus" class="display-box">Alarm not set</div>
+  <div>
+    <button onclick="setAlarm()">Set Alarm</button>
+    <button onclick="clearAlarm()">Clear Alarm</button>
+  </div>
+</section>
+
+<section id="world-clock">
+  <h2>🌍 World Clock</h2>
+  <div id="worldClocks" class="display-box">
+    Tokyo: <span id="tokyoTime">00:00:00</span><br>
+    London: <span id="londonTime">00:00:00</span><br>
+    New York: <span id="nyTime">00:00:00</span>
+  </div>
+</section>
+
+<footer style="text-align: center; padding: 10px; font-size: 14px; color: #555;">
+  Project made by Shivani Mourya, VMLG Student.
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

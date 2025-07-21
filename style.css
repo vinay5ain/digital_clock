@@ -1,0 +1,94 @@
+:root {
+  --primary-color: #2a5298;
+  --secondary-color: #2050a8;
+  --bg-color: #49eb1ca0; /* Bleach soft background by default */
+  --card-bg: #ffffff;
+  --text-color: #111;
+}
+
+body.dark {
+  --bg-color: #121212;
+  --card-bg: #1e1e1e;
+  --text-color: #f0f0f0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+  scroll-behavior: smooth;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  background: var(--primary-color);
+  color: white;
+  padding: 10px;
+  z-index: 10;
+}
+
+.navbar a, .navbar button {
+  color: white;
+  background: none;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  margin: 8px 12px;
+  font-weight: 500;
+  transition: color 0.3s, transform 0.2s;
+}
+
+.navbar a:hover, .navbar button:hover {
+  color: #ffd700;
+  transform: scale(1.05);
+}
+
+section {
+  padding: 40px 20px;
+  max-width: 900px;
+  margin: auto;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+
+.display-box {
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  margin: 10px 0;
+  font-size: 2em;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+button, select {
+  background: var(--primary-color);
+  color: rgb(32, 119, 182);
+  border: none;
+  padding: 8px 16px;
+  margin: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+button:hover, select:hover {
+  background: var(--secondary-color);
+  transform: scale(1.05);
+}
+
+input[type="number"] {
+  width: 60px;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
