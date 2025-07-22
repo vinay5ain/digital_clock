@@ -7,87 +7,86 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body onload="initApp()">
+<audio id="alarm-sound" src="alarm.mp3" preload="auto"></audio>
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="navbar-links">
-      <a href="#live-clock">🕒 Live Clock</a>
-      <a href="#analog-clock">🕰️ Analog Clock</a>
-      <a href="#stopwatch">⏱️ Stopwatch</a>
-      <a href="#countdown">⏳ Countdown</a>
-      <a href="#alarm">⏰ Alarm</a>
-      <button onclick="toggleDarkMode()" title="Toggle Dark Mode">🌓</button>
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="navbar-links">
+    <a href="#live-clock">🕒 Live Clock</a>
+    <a href="#analog-clock">🕰️ Analog Clock</a>
+    <a href="#stopwatch">⏱️ Stopwatch</a>
+    <a href="#countdown">⏳ Countdown</a>
+    <a href="#alarm">⏰ Alarm</a>
+    <button onclick="toggleDarkMode()" title="Toggle Dark Mode">🌓</button>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<main class="container">
+
+  <!-- Live & World Clock -->
+  <section id="live-clock" class="clock-section">
+    <div>
+      <h2>Local Clock</h2>
+      <div id="localClock" class="live-clock"></div>
     </div>
-  </nav>
+    <div class="world-grid">
+      <div id="world-utc" class="world-time"></div>
+      <div id="world-london" class="world-time"></div>
+      <div id="world-tokyo" class="world-time"></div>
+      <div id="world-newyork" class="world-time"></div>
+      <div id="world-delhi" class="world-time"></div>
+    </div>
+  </section>
 
-  <!-- Main Content -->
-  <main class="container">
+  <!-- Analog Clock -->
+  <section id="analog-clock">
+    <h2>Analog Clock</h2>
+    <div class="clock">
+      <div class="hand hour"></div>
+      <div class="hand minute"></div>
+      <div class="hand second"></div>
+      <div class="center-point"></div>
+    </div>
+  </section>
 
-    <!-- Live & World Clock -->
-    <section id="live-clock" class="clock-section">
-      <div>
-        <h2>Local Clock</h2>
-        <div id="localClock" class="live-clock"></div>
-      </div>
-<div class="world-grid">
-  
-  <div id="world-utc" class="world-time"></div>
-  <div id="world-london" class="world-time"></div>
-  <div id="world-tokyo" class="world-time"></div>
-  <div id="world-newyork" class="world-time"></div>
+  <!-- Stopwatch -->
+  <section id="stopwatch">
+    <h2>Stopwatch</h2>
+    <div id="stopwatchDisplay">00:00:00</div>
+    <button onclick="startStopwatch()">Start</button>
+    <button onclick="pauseStopwatch()">Pause</button>
+    <button onclick="resetStopwatch()">Reset</button>
+  </section>
 
-</div>
+  <!-- Countdown -->
+  <section id="countdown">
+    <h2>Countdown</h2>
+    <input id="cdHours" type="number" placeholder="HH" min="0" max="23">
+    <input id="cdMinutes" type="number" placeholder="MM" min="0" max="59">
+    <input id="cdSeconds" type="number" placeholder="SS" min="0" max="59">
+    <div id="countdownDisplay">00:00:00</div>
+    <button onclick="startCountdown()">Start</button>
+    <button onclick="pauseCountdown()">Pause</button>
+    <button onclick="resetCountdown()">Reset</button>
+  </section>
 
-    </section>
+  <!-- Alarm -->
+  <section id="alarm">
+    <h2>Alarm</h2>
+    <input id="alarmHours" type="number" placeholder="HH" min="0" max="23">
+    <input id="alarmMinutes" type="number" placeholder="MM" min="0" max="59">
+    <button onclick="setAlarm()">Set Alarm</button>
+    <button onclick="clearAlarm()">Clear Alarm</button>
+    <p id="alarmStatus">Alarm not set</p>
+  </section>
 
-    <!-- Analog Clock -->
-    <section id="analog-clock">
-      <h2>Analog Clock</h2>
-      <div class="clock">
-        <div class="hand hour"></div>
-        <div class="hand minute"></div>
-        <div class="hand second"></div>
-        <div class="center-point"></div>
-      </div>
-    </section>
+</main>
 
-    <!-- Stopwatch -->
-    <section id="stopwatch">
-      <h2>Stopwatch</h2>
-      <div id="stopwatchDisplay">00:00:00</div>
-      <button onclick="startStopwatch()">Start</button>
-      <button onclick="pauseStopwatch()">Pause</button>
-      <button onclick="resetStopwatch()">Reset</button>
-    </section>
+<!-- Footer -->
+<footer>Made by Shivani Mourya | BCA Project</footer>
 
-    <!-- Countdown -->
-    <section id="countdown">
-      <h2>Countdown</h2>
-      <input id="cdHours" type="number" placeholder="HH" min="0" max="23">
-      <input id="cdMinutes" type="number" placeholder="MM" min="0" max="59">
-      <input id="cdSeconds" type="number" placeholder="SS" min="0" max="59">
-      <div id="countdownDisplay">00:00:00</div>
-      <button onclick="startCountdown()">Start</button>
-      <button onclick="pauseCountdown()">Pause</button>
-      <button onclick="resetCountdown()">Reset</button>
-    </section>
-
-    <!-- Alarm -->
-    <section id="alarm">
-      <h2>Alarm</h2>
-      <input id="alarmHours" type="number" placeholder="HH" min="0" max="23">
-      <input id="alarmMinutes" type="number" placeholder="MM" min="0" max="59">
-      <button onclick="setAlarm()">Set Alarm</button>
-      <button onclick="clearAlarm()">Clear Alarm</button>
-      <p id="alarmStatus">Alarm not set</p>
-    </section>
-
-  </main>
-
-  <!-- Footer -->
-  <footer>Made by Shivani Mourya | BCA Project</footer>
-
-  <!-- Script -->
-  <script src="script.js"></script>
+<!-- Script -->
+<script src="script.js"></script>
 </body>
 </html>

@@ -1,10 +1,10 @@
-// 🚀 Initialization
-function initApp() {
-  updateLocalClock();
-  updateWorldClock();
-  setInterval(updateLocalClock, 1000);
-  setInterval(updateWorldClock, 1000);
-}
+const alarmAudio = document.getElementById('alarm-sound');
+
+document.addEventListener('click', () => {
+  alarmAudio.play().catch(() => {});
+  alarmAudio.pause();
+  alarmAudio.currentTime = 0;
+}, { once: true });
 
 // 🕒 Local Clock
 function updateLocalClock() {
@@ -14,17 +14,26 @@ function updateLocalClock() {
 
 // 🌍 World Clock
 function updateWorldClock() {
-  const now = new Date();
-  document.getElementById('world-tokyo').innerText = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Tokyo' });
-  document.getElementById('world-london').innerText = now.toLocaleTimeString('en-US', { timeZone: 'Europe/London' });
-  document.getElementById('world-newyork').innerText = now.toLocaleTimeString('en-US', { timeZone: 'America/New_York' });
-  document.getElementById('world-delhi').innerText = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata' });
-  document.getElementById('world-utc').innerText = now.toLocaleTimeString('en-US', { timeZone: 'UTC' });
+  const timezones = {
+    'world-utc': { zone: 'UTC', label: 'UTC' },
+    'world-london': { zone: 'Europe/London', label: 'London' },
+    'world-tokyo': { zone: 'Asia/Tokyo', label: 'Tokyo' },
+    'world-newyork': { zone: 'America/New_York', label: 'New York' },
+    'world-delhi': { zone: 'Asia/Kolkata', label: 'Delhi' }
+  };
+
+  for (const [id, { zone, label }] of Object.entries(timezones)) {
+    const now = new Date();
+    const time = now.toLocaleTimeString('en-US', {
+      hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: zone, hour12: false
+    });
+    const element = document.getElementById(id);
+    if (element) element.innerText = `${label}: ${time}`;
+  }
 }
 
 // ⏱ Stopwatch
-let stopwatchInterval = null;
-let stopwatchSeconds = 0;
+let stopwatchSeconds = 0, stopwatchInterval = null;
 
 function updateStopwatchDisplay() {
   const h = String(Math.floor(stopwatchSeconds / 3600)).padStart(2, '0');
@@ -53,9 +62,8 @@ function resetStopwatch() {
   updateStopwatchDisplay();
 }
 
-// ⏳ Countdown Timer
-let countdownInterval = null;
-let countdownSeconds = 0;
+// ⏳ Countdown
+let countdownSeconds = 0, countdownInterval = null;
 
 function updateCountdownDisplay() {
   const h = String(Math.floor(countdownSeconds / 3600)).padStart(2, '0');
@@ -69,13 +77,9 @@ function startCountdown() {
     const h = parseInt(document.getElementById('cdHours').value) || 0;
     const m = parseInt(document.getElementById('cdMinutes').value) || 0;
     const s = parseInt(document.getElementById('cdSeconds').value) || 0;
-
     countdownSeconds = h * 3600 + m * 60 + s;
-
     if (countdownSeconds <= 0) return;
-
     updateCountdownDisplay();
-
     countdownInterval = setInterval(() => {
       if (countdownSeconds > 0) {
         countdownSeconds--;
@@ -83,6 +87,7 @@ function startCountdown() {
       } else {
         clearInterval(countdownInterval);
         countdownInterval = null;
+        alarmAudio.play();
         alert("⏰ Countdown finished!");
         document.getElementById('countdownDisplay').classList.add('flash-effect');
         setTimeout(() => {
@@ -105,20 +110,16 @@ function resetCountdown() {
 }
 
 // ⏰ Alarm
-let alarmHour = null;
-let alarmMinute = null;
+let alarmHour = null, alarmMinute = null;
 
 function setAlarm() {
   alarmHour = parseInt(document.getElementById('alarmHours').value);
   alarmMinute = parseInt(document.getElementById('alarmMinutes').value);
-
   if (isNaN(alarmHour) || isNaN(alarmMinute)) {
     alert("Please enter a valid time.");
     return;
   }
-
-  document.getElementById('alarmStatus').innerText =
-    `Alarm set for ${String(alarmHour).padStart(2, '0')}:${String(alarmMinute).padStart(2, '0')}`;
+  document.getElementById('alarmStatus').innerText = `Alarm set for ${String(alarmHour).padStart(2, '0')}:${String(alarmMinute).padStart(2, '0')}`;
 }
 
 function clearAlarm() {
@@ -129,13 +130,9 @@ function clearAlarm() {
 
 function checkAlarm() {
   if (alarmHour === null || alarmMinute === null) return;
-
   const now = new Date();
-  if (
-    now.getHours() === alarmHour &&
-    now.getMinutes() === alarmMinute &&
-    now.getSeconds() === 0
-  ) {
+  if (now.getHours() === alarmHour && now.getMinutes() === alarmMinute && now.getSeconds() === 0) {
+    alarmAudio.play();
     alert("⏰ Alarm Time!");
     document.getElementById('alarmStatus').classList.add('flash-effect');
     setTimeout(() => {
@@ -145,37 +142,33 @@ function checkAlarm() {
   }
 }
 
-setInterval(checkAlarm, 1000); // Keep checking alarm every second
-
 // 🌗 Theme Toggle
 function toggleDarkMode() {
   document.body.classList.toggle('dark-mode');
 }
-function updateWorldClock() {
-  const timezones = {
-    'world-utc': 'UTC',
-    'world-london': 'Europe/London',
-    'world-tokyo': 'Asia/Tokyo',
-    'world-newyork': 'America/New_York',
-    'world-delhi': 'Asia/Kolkata'
-  };
 
-  Object.keys(timezones).forEach(id => {
-    const now = new Date();
-    const options = {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      timeZone: timezones[id],
-      hour12: false
-    };
-    document.getElementById(id).innerText = `${timezones[id]}: ${now.toLocaleTimeString('en-US', options)}`;
-  });
+// ⏰ Init All
+function initApp() {
+  updateLocalClock();
+  updateWorldClock();
+  updateStopwatchDisplay();
+  updateCountdownDisplay();
+  setInterval(() => {
+    updateLocalClock();
+    updateWorldClock();
+    checkAlarm();
+    updateAnalogClock();
+  }, 1000);
 }
 
-function initApp() {
-  setInterval(() => {
-    updateLocalClock();     // your existing function for local clock
-    updateWorldClock();     // this will update all world clocks
-  }, 1000);
+// 🕰️ Analog Clock Update
+function updateAnalogClock() {
+  const now = new Date();
+  const second = now.getSeconds() * 6;
+  const minute = now.getMinutes() * 6 + second / 60;
+  const hour = ((now.getHours() % 12) * 30) + (minute / 12);
+
+  document.querySelector('.hand.hour').style.transform = `rotate(${hour}deg)`;
+  document.querySelector('.hand.minute').style.transform = `rotate(${minute}deg)`;
+  document.querySelector('.hand.second').style.transform = `rotate(${second}deg)`;
 }
