@@ -1,94 +1,340 @@
 :root {
-  --primary-color: #2a5298;
-  --secondary-color: #2050a8;
-  --bg-color: #49eb1ca0; /* Bleach soft background by default */
-  --card-bg: #ffffff;
-  --text-color: #111;
-}
-
-body.dark {
-  --bg-color: #121212;
-  --card-bg: #1e1e1e;
-  --text-color: #f0f0f0;
+  --primary: #296ad2;     /* Soft Sky Blue */
+  --secondary: #3076d1;   /* Icy Blue */
+  --accent: #ff7eb3;      /* Pale Rose */
+  --light: #ffffff;
+  --dark: #1f2c3a;
 }
 
 body {
-  margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: var(--bg-color);
-  color: var(--text-color);
-  scroll-behavior: smooth;
+  margin: 0;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  color: var(--dark);
+  transition: background 0.5s, color 0.5s;
+  padding-bottom: 80px;
 }
 
+/* 🌙 Dark Mode with Teal Green Background */
+.dark-mode {
+  background: linear-gradient(to right, #014d4d, #001f1f);
+  color: var(--accent);
+}
+
+/* 🧭 Navbar */
 .navbar {
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 12px 10px;
   position: sticky;
   top: 0;
-  background: var(--primary-color);
-  color: white;
-  padding: 10px;
-  z-index: 10;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  gap: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.navbar a, .navbar button {
-  color: white;
+.navbar-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.navbar a,
+.navbar button {
+  color: var(--dark);
+  font-size: 16px;
   background: none;
   border: none;
-  font: inherit;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.3s ease, color 0.3s ease;
   cursor: pointer;
-  margin: 8px 12px;
-  font-weight: 500;
-  transition: color 0.3s, transform 0.2s;
 }
 
-.navbar a:hover, .navbar button:hover {
-  color: #ffd700;
-  transform: scale(1.05);
+.navbar a:hover,
+.navbar button:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--accent);
 }
 
+/* 📦 Section */
 section {
-  padding: 40px 20px;
-  max-width: 900px;
-  margin: auto;
-  text-align: center;
-}
-
-h2 {
-  margin-bottom: 20px;
-  color: var(--primary-color);
-}
-
-.display-box {
-  background: var(--card-bg);
+  max-width: 500px;
+  margin: 20px auto;
   padding: 20px;
-  border-radius: 12px;
-  margin: 10px 0;
-  font-size: 2em;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-button, select {
-  background: var(--primary-color);
-  color: rgb(32, 119, 182);
-  border: none;
-  padding: 8px 16px;
-  margin: 6px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
-}
-
-button:hover, select:hover {
-  background: var(--secondary-color);
-  transform: scale(1.05);
-}
-
-input[type="number"] {
-  width: 60px;
-  padding: 6px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
   text-align: center;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+}
+
+/* 🕒 Clock Display */
+.display-box {
+  font-size: 2em;
+  padding: 20px;
+  margin: 20px auto;
+  background-color: rgba(255, 255, 255, 0.2);
+  width: fit-content;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* 🕰 Analog Clock */
+.clock {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 30px auto;
+  border: 10px solid var(--light);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+.hand {
+  position: absolute;
+  width: 50%;
+  height: 2px;
+  background: var(--accent);
+  top: 50%;
+  left: 50%;
+  transform-origin: left;
+  transform: rotate(90deg);
+  transition: transform 0.5s ease-in-out;
+}
+
+.center-dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* 🔘 Buttons */
+button {
+  padding: 10px 18px;
+  margin: 5px;
+  font-size: 16px;
+  background: transparent;
+  color: var(--dark);
+  border: 2px solid var(--dark);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s, color 0.3s;
+}
+
+button:hover {
+  background: var(--accent);
+  color: black;
+  transform: scale(1.08);
+  border-color: var(--accent);
+}
+
+/* 🧾 Inputs */
+input {
+  padding: 8px;
+  margin: 5px;
+  border: none;
+  border-radius: 6px;
+  width: 80px;
+  text-align: center;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.3);
+  color: var(--dark);
+}
+
+input::placeholder {
+  color: #444;
+}
+
+/* 📌 Footer */
+footer {
+  text-align: center;
+  padding: 15px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-top: 30px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+/* 💡 Flash Effect */
+.flash-effect {
+  animation: flashGlow 1s ease-in-out infinite alternate;
+  box-shadow: 0 0 25px var(--accent), 0 0 60px var(--accent);
+  background-color: rgba(255, 126, 179, 0.15) !important;
+  color: var(--accent) !important;
+}
+
+@keyframes flashGlow {
+  0% {
+    box-shadow: 0 0 10px var(--accent), 0 0 30px var(--accent);
+    transform: scale(1);
+  }
+  100% {
+    box-shadow: 0 0 30px var(--accent), 0 0 70px var(--accent);
+    transform: scale(1.02);
+  }
+}
+
+/* 💫 Pulse */
+.pulse {
+  animation: pulseAnim 2s infinite;
+}
+
+@keyframes pulseAnim {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 🕒 Live Clock Card */
+.live-clock-card {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 30px 20px;
+  background: linear-gradient(145deg, var(--primary), var(--secondary));
+  border-radius: 20px;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2),
+              -10px -10px 20px rgba(255, 255, 255, 0.1);
+  text-align: center;
+  color: var(--dark);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.live-clock-card h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.live-time {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--accent);
+  text-shadow: 0 0 10px rgba(255, 126, 179, 0.6);
+  transition: all 0.5s ease-in-out;
+}
+
+/* 🌗 Toggle Switch */
+.toggle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+}
+
+.toggle-checkbox {
+  display: none;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 60px;
+  height: 30px;
+  background: var(--primary);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.4s ease-in-out;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1),
+              0 0 8px var(--accent);
+}
+
+.toggle-switch::before {
+  content: '';
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  top: 2px;
+  left: 2px;
+  background: var(--light);
+  border-radius: 50%;
+  transition: transform 0.3s ease, background 0.3s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-checkbox:checked + .toggle-switch {
+  background: var(--accent);
+}
+
+.toggle-checkbox:checked + .toggle-switch::before {
+  transform: translateX(30px);
+  background: var(--dark);
+}
+
+.dark-mode .toggle-switch {
+  background: var(--dark);
+}
+
+.dark-mode .toggle-switch::before {
+  background: var(--accent);
+}
+
+/* 🌍 World Time Grid */
+
+.live-clock {
+  font-size: 3rem;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.world-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.world-time {
+  background: var(--light);
+  color: var(--dark);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.world-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.world-time {
+  background-color: var(--secondary);
+  color: #000;
+  padding: 1rem;
+  border-radius: 12px;
+  min-width: 150px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Orbitron', sans-serif;
+  transition: all 0.3s ease;
+}
+
+.dark-mode .world-time {
+  background-color: var(--dark);
+  color: var(--light);
+  border: 1px solid var(--accent);
 }
