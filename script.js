@@ -160,15 +160,87 @@ function initApp() {
     updateAnalogClock();
   }, 1000);
 }
+// 🎨 Canvas Analog Clock
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+let radius = canvas.height / 2;
+ctx.translate(radius, radius);
+radius = radius * 0.90;
 
-// 🕰️ Analog Clock Update
-function updateAnalogClock() {
-  const now = new Date();
-  const second = now.getSeconds() * 6;
-  const minute = now.getMinutes() * 6 + second / 60;
-  const hour = ((now.getHours() % 12) * 30) + (minute / 12);
-
-  document.querySelector('.hand.hour').style.transform = `rotate(${hour}deg)`;
-  document.querySelector('.hand.minute').style.transform = `rotate(${minute}deg)`;
-  document.querySelector('.hand.second').style.transform = `rotate(${second}deg)`;
+// Draw clock every second
+function drawClock() {
+  drawFace(ctx, radius);
+  drawNumbers(ctx, radius);
+  drawTime(ctx, radius);
 }
+
+function drawFace(ctx, radius) {
+  ctx.beginPath();
+  ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+  ctx.fillStyle = "#fff"; // background
+  ctx.fill();
+
+  // Outer border
+  ctx.strokeStyle = "#333";
+  ctx.lineWidth = radius * 0.05;
+  ctx.stroke();
+
+  // Center dot
+  ctx.beginPath();
+  ctx.arc(0, 0, radius * 0.05, 0, 2 * Math.PI);
+  ctx.fillStyle = "#333";
+  ctx.fill();
+}
+
+function drawNumbers(ctx, radius) {
+  ctx.font = radius * 0.15 + "px Arial";
+  ctx.textBaseline = "middle";
+  ctx.textAlign = "center";
+  for (let num = 1; num <= 12; num++) {
+    let ang = num * Math.PI / 6;
+    ctx.rotate(ang);
+    ctx.translate(0, -radius * 0.85);
+    ctx.rotate(-ang);
+    ctx.fillText(num.toString(), 0, 0);
+    ctx.rotate(ang);
+    ctx.translate(0, radius * 0.85);
+    ctx.rotate(-ang);
+  }
+}
+
+function drawTime(ctx, radius) {
+  const now = new Date();
+  let hour = now.getHours();
+  let minute = now.getMinutes();
+  let second = now.getSeconds();
+
+  // Hour hand
+  hour = hour % 12;
+  hour = (hour * Math.PI / 6) +
+         (minute * Math.PI / (6 * 60)) +
+         (second * Math.PI / (360 * 60));
+  drawHand(ctx, hour, radius * 0.5, radius * 0.07);
+
+  // Minute hand
+  minute = (minute * Math.PI / 30) + (second * Math.PI / (30 * 60));
+  drawHand(ctx, minute, radius * 0.8, radius * 0.07);
+
+  // Second hand
+  second = (second * Math.PI / 30);
+  drawHand(ctx, second, radius * 0.9, radius * 0.02, "red");
+}
+
+function drawHand(ctx, pos, length, width, color = "#333") {
+  ctx.beginPath();
+  ctx.lineWidth = width;
+  ctx.lineCap = "round";
+  ctx.strokeStyle = color;
+  ctx.moveTo(0, 0);
+  ctx.rotate(pos);
+  ctx.lineTo(0, -length);
+  ctx.stroke();
+  ctx.rotate(-pos);
+}
+
+// Replace your old updateAnalogClock()
+setInterval(drawClock, 1000);
